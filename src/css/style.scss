@@ -1,0 +1,167 @@
+$background-color: #e9ebee;
+$dark-color: #004573;
+$white: #fff;
+$black: #000;
+$light-grey: #9aa;
+$light-blue: #4dc5da;
+
+* {
+  margin: 0;
+}
+
+body {
+  background-color: $background-color;
+}
+
+.loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%);
+}
+.notFound {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%);
+  color: #f12;
+}
+input:focus,
+button:focus,
+.btn:focus {
+  outline: none !important;
+}
+
+.navbar {
+  background: $dark-color !important;
+  border: 1px solid;
+  padding: 0 20px;
+}
+
+.footer {
+  color: #fff;
+  background: $dark-color !important;
+  text-align: center;
+  padding: 15px 0;
+}
+
+.app {
+  min-height: 75vh;
+  width: 90vw;
+  margin: 20px auto;
+}
+.search {
+  border: 1px solid $light-grey;
+  border-radius: 45px;
+  background-color: $white;
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  position: relative;
+
+  input {
+    border: none;
+    border-radius: 45px;
+    flex: 1;
+    font-size: 0.8em;
+    padding-left: 1em;
+  }
+  button {
+    border-radius: 0 45px 45px 0;
+    border: none;
+    background-color: $dark-color;
+    color: $white;
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+input[type="radio"]:checked + .btn {
+  background-color: $light-blue;
+}
+
+.searchProducts {
+  margin: 15px;
+  padding: 0px;
+  position: relative;
+  border: 1px solid;
+  padding: 10px;
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
+
+  input[type="radio"]:checked {
+    border-color: $light-blue;
+    background-color: $light-blue;
+  }
+
+  input {
+    position: absolute;
+    right: 2px;
+    margin-left: 20px;
+  }
+}
+
+.products {
+  background-color: $white;
+  position: relative;
+  min-height: 70vh;
+  border-radius: 5px;
+  h5 {
+    padding: 20px;
+    color: $light-blue;
+  }
+
+  .product {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    min-height: 300px;
+    padding: 0;
+    img {
+      height: 200px;
+      object-fit: contain;
+      width: 100%;
+    }
+    h6 {
+      font-size: smaller;
+    }
+    .price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: $light-blue;
+      opacity: 0.7;
+      &:hover {
+        text-decoration: none;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.sidebar {
+  background-color: $white;
+  padding: 10px;
+
+  h4 {
+    font-size: larger;
+    font-weight: 700;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .sidebar__visability {
+    position: absolute;
+    width: 300px;
+    z-index: 100;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .apply_invisible {
+    visibility: hidden;
+  }
+}
