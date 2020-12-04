@@ -18,9 +18,7 @@ function Product({product}) {
                 return string
             }
       }
-    const displayRating   = (rating) => {
-        return parseInt(rating.slice(0, 2))
-    }
+   
     const priceSymbol = (price) => {
        if(price.charAt(0) === '£'){
             return price.substring(1)
@@ -40,12 +38,7 @@ function Product({product}) {
                             <div  key={res.id}>
                                 <a href={res.link} className="price">
                                 <span>{trimTitle(res.title)} </span>
-                                {/* {res.rating &&  <span className="product__rating">
-                                {Array(displayRating(res?.rating)).fill().map((_, i) => {
-                                return  <i className="fas fa-star-alt" key={i}></i>
-                                   })
-                                }
-                                </span>} */}
+                               
                                 <span>£{priceSymbol(res?.price)}</span>
                                 </a>
                                 <hr/>
