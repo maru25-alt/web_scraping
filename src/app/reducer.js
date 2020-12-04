@@ -30,7 +30,7 @@ export const sortByPrice = (products, type) => {
 }
 
 export const getData = (query, num, priceby) => {
-   return axios.get(`http://localhost:8000/products/getProducts/${query}/${num}/${priceby}`)
+   return axios.get(`https://price-compare-app25.herokuapp.com/products/getProducts/${query}/${num}/${priceby}`)
   
 }
 
