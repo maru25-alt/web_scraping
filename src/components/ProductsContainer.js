@@ -4,6 +4,7 @@ import Loading from './Loading';
 import { useStateValue } from '../app/StateProvider';
 import {getData} from '../app/reducer'
 
+
 function ProductsContainer() {
     const [ {products, loading, query, num , priceby, searchArray}, dispatch] = useStateValue();
 
@@ -70,9 +71,10 @@ function ProductsContainer() {
             <>
                 {products.length <= 0 ? <div className="notFound">No Products Found!</div> : 
                    <div className="row container">
-                      {products && products.map((product, index) => {
-                          return(  <Product key={index} product={product}/>)
-                     })}
+                       {products && products.filter(product => product.data.length !== 0).map((product, index) => {
+                             return(  <Product key={index} product={product}/>)
+                       })
+                       }
                    </div>
                 }
             </>

@@ -88,15 +88,16 @@ function SideBar() {
         type: "SET_SHOWFILTERS",
         payload: !showFilters
        })
+       dispatch({
+        type: "SET_QUERY",
+        payload: value
+      })
         getData(value, num, priceby).then(res => {
            dispatch({
                type: "GET_PRODUCTS",
                payload: res.data
              });
-             dispatch({
-               type: "SET_QUERY",
-               payload: value
-             })
+            
              dispatch({
                type: "SET_LOADING",
                payload: false

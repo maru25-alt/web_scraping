@@ -15,16 +15,16 @@ function SearchBar() {
                 payload: true
             });
            const query =  search.toLowerCase(); 
+          dispatch({
+            type: "SET_QUERY",
+            payload: query
+          })
           await getData(query, num, priceby).then(res => {
               console.log(res.data);
             dispatch({
                type: "GET_PRODUCTS",
                payload: res.data
              })
-             dispatch({
-                type: "SET_QUERY",
-                payload: query
-              })
             
                dispatch({
                 type: "SET_LOADING",
