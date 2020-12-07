@@ -6,7 +6,7 @@ import {getData} from '../app/reducer'
 
 
 function ProductsContainer() {
-    const [ {products, loading, query, num , priceby, searchArray}, dispatch] = useStateValue();
+    const [ {products, loading, query, num , priceby, searchArray, page}, dispatch] = useStateValue();
 
     useEffect(() => {
         dispatch({
@@ -31,7 +31,8 @@ function ProductsContainer() {
             type: "SET_LOADING",
             payload: true
         });
-         getData(value, num, priceby).then(res => {
+         getData(value, num, priceby, page).then(res => {
+             console.log(res.data)
             dispatch({
                 type: "GET_PRODUCTS",
                 payload: res.data
@@ -52,6 +53,37 @@ function ProductsContainer() {
              });
         });
     }
+
+    const handlePagination = () => {
+        dispatch({
+            type: "SET_LOADING",
+            payload: true
+        });
+        let new_page = page + 1
+        dispatch({
+            type: "SET_PAGE",
+            payload: new_page
+        })
+         getData(query, num, priceby, new_page).then(res => {
+             console.log(res.data)
+            dispatch({
+                type: "GET_PRODUCTS",
+                payload: res.data
+              });
+    
+              dispatch({
+                type: "SET_LOADING",
+                payload: false
+               });
+         }).catch(err => {
+            console.log(err);
+            dispatch({
+              type: "SET_LOADING",
+              payload: false
+             });
+        });
+
+    }
    
     return (
         <div className="products">
@@ -71,16 +103,22 @@ function ProductsContainer() {
             <>
                 {products.length <= 0 ? <div className="notFound">No Products Found!</div> : 
                    <div className="row container">
-                       {products && products.filter(product => product.data.length !== 0).map((product, index) => {
-                             return(  <Product key={index} product={product}/>)
+                        <div className="product  form-group">
+                          <img src={products[0].image} className="card-img-top" alt="product"/>
+                       {products && products.map((product) => {
+                             return(  <Product key={product._id} product={product}/>)
                        })
                        }
+                       </div>
+
                    </div>
                 }
+                 <button onClick={handlePagination} className="btn btn-info text-center">Load More</button>
             </>
         }
             </>
           }
+           
         </div>
     )
 }

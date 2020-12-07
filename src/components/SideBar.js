@@ -3,7 +3,7 @@ import { useStateValue} from '../app/StateProvider';
 import {getData} from '../app/reducer'
 
 function SideBar() {
-    const [ {query, num, priceby, searchArray, showFilters}, dispatch] = useStateValue();
+    const [ {query, num, priceby, searchArray, showFilters, page}, dispatch] = useStateValue();
 
     const handleChangePrice  = (e)=> {
         console.log(e.target.value)
@@ -20,7 +20,7 @@ function SideBar() {
                 type: "SET_LOADING",
                 payload: true
             });
-            getData(query, num, e.target.value).then(res => {
+            getData(query, num, e.target.value, page).then(res => {
                 dispatch({
                     type: "GET_PRODUCTS",
                     payload: res.data
@@ -58,7 +58,7 @@ function SideBar() {
                 type: "SET_LOADING",
                 payload: true
             });
-            getData(query, value, priceby).then(res => {
+            getData(query, value, priceby, page).then(res => {
                 dispatch({
                     type: "GET_PRODUCTS",
                     payload: res.data
@@ -92,7 +92,7 @@ function SideBar() {
         type: "SET_QUERY",
         payload: value
       })
-        getData(value, num, priceby).then(res => {
+        getData(value, num, priceby, page).then(res => {
            dispatch({
                type: "GET_PRODUCTS",
                payload: res.data

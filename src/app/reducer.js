@@ -1,4 +1,4 @@
-//import instance from './axios';
+//import axios from './axios';
 import axios from 'axios'
 
 export const intialState = {
@@ -7,6 +7,7 @@ export const intialState = {
     showFilters: false,
     query: "",
     num: 3,
+    page: 1,
     priceby: "asc",
     searchArray: ["phone",
     "tv",
@@ -29,9 +30,8 @@ export const sortByPrice = (products, type) => {
    }
 }
 
-export const getData = (query, num, priceby) => {
-   return axios.get(`https://price-compare-app25.herokuapp.com/products/getProducts/${query}/${num}/${priceby}`)
-  
+export const getData = (query, num, priceby, page) => {
+   return axios.get(`http://localhost:8000/products/getProducts/${query}/${page}/${num}/priceby`)
 }
 
 const reducer = (state, action) => {
@@ -41,6 +41,11 @@ const reducer = (state, action) => {
                 ...state,
                 products:  action.payload
             }
+         case 'SET_PAGE':   
+           return{
+               ...state,
+               page: action.payload
+           }
         case 'SET_LOADING':
             return{
                 ...state,

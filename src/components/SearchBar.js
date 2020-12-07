@@ -5,7 +5,7 @@ import { getData } from '../app/reducer';
 
 function SearchBar() {
     const [search, setsearch] = useState("");
-    const [{num, priceby, showFilters},dispatch] = useStateValue();
+    const [{num, priceby, showFilters , page},dispatch] = useStateValue();
     
     const handleSearch = async(e) => {
         e.preventDefault();
@@ -19,7 +19,7 @@ function SearchBar() {
             type: "SET_QUERY",
             payload: query
           })
-          await getData(query, num, priceby).then(res => {
+          await getData(query, num, priceby, page).then(res => {
               console.log(res.data);
             dispatch({
                type: "GET_PRODUCTS",

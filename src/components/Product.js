@@ -2,15 +2,11 @@ import React from 'react'
 
 
 function Product({product}) {
-    const {website, data} = product;
-    let img = ""
-    if(data){
-        img = data[0]?.image
-    }
+    const {website, image, item, price, link, title, rating} = product;
    
 
     const trimTitle = (string) => {
-            let num = 40
+            let num = 25
              if(string.length > num){
                 return string.substr(0, num) + '...';
             }
@@ -28,28 +24,16 @@ function Product({product}) {
        }
     }
     return (
-        <div className="col-12">
-            <div className="product  form-group">
-                <img src={img} className="card-img-top" alt="product"/>
-                <div className="card-body">
-                    <h6 className="card-title">Shop: {website}</h6>
-                    {data && data.map(res => {
-                        return(
-                            <div  key={res.id}>
-                                <a href={res.link} className="price">
-                                <span>{trimTitle(res.title)} </span>
-                               
-                                <span>£{priceSymbol(res?.price)}</span>
+       
+                <div className="">
+                    <h6 className="card-title px-1">Shop: {website}</h6>
+                                <a href={link} className="price">
+                                <span>{item}</span>
+                                <span>{trimTitle(title)}</span>
+                                <span>£{priceSymbol(price)}</span>
                                 </a>
                                 <hr/>
-                           </div>  
-                        )
-                    })}
-                   
-                </div>
-            </div>
-            
-        </div>
+                  </div>
     )
 }
 
