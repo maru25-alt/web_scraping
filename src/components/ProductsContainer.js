@@ -103,7 +103,7 @@ function ProductsContainer() {
             <>
                 {products.length <= 0 ? <div className="notFound">No Products Found!</div> : 
                    <div className="row container">
-                        <div className="product  form-group">
+                        <div className="product col-12  form-group">
                           <img src={products[0].image} className="card-img-top" alt="product"/>
                        {products && products.map((product) => {
                              return(  <Product key={product._id} product={product}/>)
