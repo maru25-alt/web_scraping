@@ -2,7 +2,7 @@ import React from 'react'
 
 
 function Product({product}) {
-    const {website, image, item, price, link, title, rating} = product;
+    const {website,  item, price, link, title} = product;
    
 
     const trimTitle = (string) => {
