@@ -51,7 +51,7 @@ export const sortByPrice = (products, type) => {
 //http://localhost:8000/products/getProducts/phone/2/5/asc
 
 export const getData = (query, num, priceby, page) => {
-   return axios.get(`http://localhost:8000/products/getProducts/${query}/${page}/${num}/${priceby}`)
+   return axios.get(`https://scrapping25.herokuapp.com/products/getProducts/${query}/${page}/${num}/${priceby}`)
 }
 
 const reducer = (state, action) => {
