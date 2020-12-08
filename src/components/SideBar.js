@@ -5,39 +5,39 @@ import {getData} from '../app/reducer'
 function SideBar() {
     const [ {query, num, priceby, searchArray, showFilters, page, shops}, dispatch] = useStateValue();
 
-    const handleChangePrice  = (e)=> {
-        console.log(e.target.value)
-        dispatch({
-            type: "SET_PRICEBY",
-            payload: e.target.value
-        });
-        dispatch({
-            type: "SET_SHOWFILTERS",
-            payload: !showFilters
-        })
-        if(query !== ""){
-            dispatch({
-                type: "SET_LOADING",
-                payload: true
-            });
-            getData(query, num, e.target.value, page).then(res => {
-                dispatch({
-                    type: "GET_PRODUCTS",
-                    payload: res.data
-                  })
-                    dispatch({
-                     type: "SET_LOADING",
-                     payload: false
-                    });
-            }).catch(err => {
-                console.log(err);
-                dispatch({
-                  type: "SET_LOADING",
-                  payload: false
-                 });
-            });
-        }
-    }
+    // const handleChangePrice  = (e)=> {
+    //     console.log(e.target.value)
+    //     dispatch({
+    //         type: "SET_PRICEBY",
+    //         payload: e.target.value
+    //     });
+    //     dispatch({
+    //         type: "SET_SHOWFILTERS",
+    //         payload: !showFilters
+    //     })
+    //     if(query !== ""){
+    //         dispatch({
+    //             type: "SET_LOADING",
+    //             payload: true
+    //         });
+    //         getData(query, num, e.target.value, page).then(res => {
+    //             dispatch({
+    //                 type: "GET_PRODUCTS",
+    //                 payload: res.data
+    //               })
+    //                 dispatch({
+    //                  type: "SET_LOADING",
+    //                  payload: false
+    //                 });
+    //         }).catch(err => {
+    //             console.log(err);
+    //             dispatch({
+    //               type: "SET_LOADING",
+    //               payload: false
+    //              });
+    //         });
+    //     }
+    // }
 
     const  handleChangeNum = (e) => {
         const value = parseInt(e.target.value)
