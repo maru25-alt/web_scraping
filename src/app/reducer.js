@@ -9,12 +9,30 @@ export const intialState = {
     num: 3,
     page: 1,
     priceby: "asc",
-    searchArray: ["phone",
+    shops: [
+        {
+            name: "apple",
+            value: true,
+        },
+        {
+            name: "ebay",
+            value: true,
+        },
+        {
+            name: "amazon",
+            value: true,
+        },
+        {
+            name: "john lewis",
+            value: true,
+        }],
+    searchArray: [
+    "phone",
     "tv",
     "laptop",
-    "macbook",
-    "Iphone",
-    "ipad"
+    "ipad",
+    "watch"
+
 ]
 
 }
@@ -30,8 +48,10 @@ export const sortByPrice = (products, type) => {
    }
 }
 
+//http://localhost:8000/products/getProducts/phone/2/5/asc
+
 export const getData = (query, num, priceby, page) => {
-   return axios.get(`https://scrapping25.herokuapp.com/products/getProducts/${query}/${page}/${num}/${priceby}`)
+   return axios.get(`http://localhost:8000/products/getProducts/${query}/${page}/${num}/${priceby}`)
 }
 
 const reducer = (state, action) => {
@@ -71,7 +91,14 @@ const reducer = (state, action) => {
                ...state,
                showFilters: action.payload
 
-           }    
+           } 
+        case "SET_SHOP":
+          const newArray =  state.shops.filter(e => e.name !== action.payload.name);
+          console.log(state.shops)
+            return{
+                ...state,
+                shops: [ ...newArray,  {value: action.payload.value, name : action.payload.name} ]
+            }      
         default: return  state    
     }
 }

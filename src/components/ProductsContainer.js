@@ -3,7 +3,7 @@ import Product from './Product';
 import Loading from './Loading';
 import { useStateValue } from '../app/StateProvider';
 import {getData} from '../app/reducer'
-
+import _ from 'lodash';
 
 function ProductsContainer() {
     const [ {products, loading, query, num , priceby, searchArray, page}, dispatch] = useStateValue();
@@ -84,7 +84,12 @@ function ProductsContainer() {
         });
 
     }
+
+    var result = _.groupBy(products, function(product) {
+        return product.website;
+      });
    
+  
     return (
         <div className="products">
             <h5> {query !== "" ? <> {capitalizeFirstLetter(query)} (results) </>  : <>My Feeds</>} </h5>
@@ -103,17 +108,14 @@ function ProductsContainer() {
             <>
                 {products.length <= 0 ? <div className="notFound">No Products Found!</div> : 
                    <div className="row container">
-                        <div className="product col-12  form-group">
-                          <img src={products[0].image} className="card-img-top" alt="product"/>
-                       {products && products.map((product) => {
-                             return(  <Product key={product._id} product={product}/>)
-                       })
-                       }
-                       </div>
+                       {Object.keys(result).map(function(key, index) {
+                               return(  <Product key={key} product={result[Object.keys(result)[index]]}/>)
+                         }
+                       )}
 
                    </div>
                 }
-                 <button onClick={handlePagination} className="btn btn-info text-center">Load More</button>
+                 <button onClick={handlePagination} className="btn btn-info loading__button">Load More</button>
             </>
         }
             </>

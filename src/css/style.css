@@ -184,4 +184,11 @@ input[type="radio"]:checked + .btn {
     visibility: hidden;
   }
 }
+
+.loading__button {
+  margin-left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  margin-bottom: 20px;
+}
 /*# sourceMappingURL=style.css.map */

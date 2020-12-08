@@ -3,7 +3,7 @@ import { useStateValue} from '../app/StateProvider';
 import {getData} from '../app/reducer'
 
 function SideBar() {
-    const [ {query, num, priceby, searchArray, showFilters, page}, dispatch] = useStateValue();
+    const [ {query, num, priceby, searchArray, showFilters, page, shops}, dispatch] = useStateValue();
 
     const handleChangePrice  = (e)=> {
         console.log(e.target.value)
@@ -111,28 +111,35 @@ function SideBar() {
        });
    }
 
+   const handleShops = (e) =>{
+    dispatch({
+        type: "SET_SHOP",
+        payload: {
+            value: e.target.checked,
+            name: e.target.name
+        }
+       })
+   }
+
     return (
         <>
-        {/* <button className="btn">
-            <i class="fa fa-bars " aria-hidden="true"></i>
-        </button> */}
         <div className={showFilters  ? 'sidebar sidebar__visability' :  'sidebar sidebar__visability apply_invisible'} >
-            <h4>Filter Search By:</h4>
+            <h4>Select Shop:</h4>
             <hr></hr>
             <div>
                 <h5>Prices</h5>
-                <div className="form-group form-check">
-                    <input onClick={handleChangePrice} type="radio" value="desc" name="price" className="form-check-input" id="maxPrice"/>
-                    <label className="form-check-label" htmlFor="exampleCheck1">Max Price</label>
-                </div>
-                <div className="form-group form-check">
-                    <input onClick={handleChangePrice}  type="radio" value="asc" name="price" className="form-check-input" id="minPrice"/>
-                    <label className="form-check-label" htmlFor="exampleCheck1">Min Price</label>
-                </div>
+                {shops && shops.map((e , i)=> {
+                    return(
+                        <div key={i} className="form-group form-check" >
+                            <input onChange={handleShops} type="checkbox" name={e.name}  className="form-check-input" id="amazon" checked={e.value}/>
+                            <label className="form-check-label" htmlFor="exampleCheck1">{e.name}</label>
+                        </div>
+                    )
+                })}
             </div>
             <hr></hr>
             <div>
-                  <h5>Products Per Shop</h5>
+                  <h5>Prices Per Product</h5>
                   <div>
                   <select onChange={handleChangeNum} className="custom-select" id="inputGroupSelect01">
                         <option defaultValue>Choose...</option>
