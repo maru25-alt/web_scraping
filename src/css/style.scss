@@ -173,3 +173,13 @@ input[type="radio"]:checked + .btn {
   transform: translateX(-50%);
   margin-bottom: 20px;
 }
+
+.loading__button {
+  position: relative;
+
+  .spinner-border {
+    position: absolute !important;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

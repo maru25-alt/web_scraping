@@ -1,12 +1,12 @@
-//import axios from './axios';
-import axios from 'axios'
+import axios from './axios';
+//import axios from 'axios'
 
 export const intialState = {
     products: [],
     loading: false,
     showFilters: false,
     query: "",
-    num: 3,
+    num: 1,
     page: 1,
     priceby: "asc",
     shops: [
@@ -27,12 +27,10 @@ export const intialState = {
             value: true,
         }],
     searchArray: [
-    "phone",
-    "tv",
-    "laptop",
-    "ipad",
-    "watch"
-
+        {
+            _id: "123",
+            item: "phone"
+        }
 ]
 
 }
@@ -49,9 +47,19 @@ export const sortByPrice = (products, type) => {
 }
 
 //http://localhost:8000/products/getProducts/phone/2/5/asc
+//http://localhost:8000
+//https://scrapping25.herokuapp.com/products/getProducts/
 
-export const getData = (query, num, priceby, page) => {
-   return axios.get(`https://scrapping25.herokuapp.com/products/getProducts/${query}/${page}/${num}/${priceby}`)
+export const getData = (query, num, priceby, page, shops) => {
+   return axios.get(`/products/getProducts/${query}/${page}/${num}/${priceby}`, shops )
+}
+
+export const addItem = (item) => {
+    return axios.post(`/products/addItem`, item);
+}
+
+export const getItems = () => {
+    return axios.get(`/products/items`);
 }
 
 const reducer = (state, action) => {
@@ -59,7 +67,7 @@ const reducer = (state, action) => {
         case 'GET_PRODUCTS':
             return{
                 ...state,
-                products:  action.payload
+                products: [ ...state.products, action.payload]
             }
          case 'SET_PAGE':   
            return{
@@ -71,6 +79,11 @@ const reducer = (state, action) => {
                 ...state,
                 loading: action.payload
             } 
+        case 'SET_SEARCH_ARRAY': 
+           return{
+               ...state,
+               searchArray: action.payload
+           }   
         case 'SET_NUM': 
            return{
             ...state,

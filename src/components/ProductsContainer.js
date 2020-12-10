@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useEffect, useState} from 'react'
 import Product from './Product';
 import Loading from './Loading';
 import { useStateValue } from '../app/StateProvider';
@@ -6,7 +6,8 @@ import {getData} from '../app/reducer'
 import _ from 'lodash';
 
 function ProductsContainer() {
-    const [ {products, loading, query, num , priceby, searchArray, page}, dispatch] = useStateValue();
+    const [ {products, loading, query, num , priceby, searchArray, page, shops}, dispatch] = useStateValue();
+    const [btn_loading, setloading] = useState(false)
 
     useEffect(() => {
         dispatch({
@@ -31,8 +32,7 @@ function ProductsContainer() {
             type: "SET_LOADING",
             payload: true
         });
-         getData(value, num, priceby, page).then(res => {
-             console.log(res.data)
+         getData(value, num, priceby, page, shops).then(res => {
             dispatch({
                 type: "GET_PRODUCTS",
                 payload: res.data
@@ -55,39 +55,25 @@ function ProductsContainer() {
     }
 
     const handlePagination = () => {
-        dispatch({
-            type: "SET_LOADING",
-            payload: true
-        });
+       setloading(true)
         let new_page = page + 1
         dispatch({
             type: "SET_PAGE",
             payload: new_page
         })
-         getData(query, num, priceby, new_page).then(res => {
-             console.log(res.data)
+         getData(query, num, priceby, new_page, shops).then(res => {
             dispatch({
                 type: "GET_PRODUCTS",
                 payload: res.data
               });
+              setloading(false)
     
-              dispatch({
-                type: "SET_LOADING",
-                payload: false
-               });
          }).catch(err => {
             console.log(err);
-            dispatch({
-              type: "SET_LOADING",
-              payload: false
-             });
+            setloading(false)
         });
 
     }
-
-    var result = _.groupBy(products, function(product) {
-        return product.website;
-      });
    
   
     return (
@@ -96,31 +82,34 @@ function ProductsContainer() {
             {loading ?  <Loading /> :
              <>
              {query === "" ?
-             <> {searchArray.map((item, index) => {
+             <> {searchArray.map((item) => {
                 return(
-                 <label key={index} className="searchProducts">
-                 <input onClick={handleSearchProducts} type="radio" name="search" value={item} id={index} />
+                 <label key={item._id} className="searchProducts">
+                 <input onClick={handleSearchProducts} type="radio" name="search" value={item.item} id={item._id} />
                  <img src="https://d17kynu4zpq5hy.cloudfront.net/igi/dozuki/rH6Tb1S1BhLFwEr4.medium" alt="product item"/>
-                 <p>{item}</p>
+                 <p>{item.item}</p>
                </label>
-               )
-            })}</> : 
+               
+             )}
+             )}</> : 
             <>
                 {products.length <= 0 ? <div className="notFound">No Products Found!</div> : 
                    <div className="row container">
-                       {Object.keys(result).map(function(key, index) {
-                               return(  <Product key={key} product={result[Object.keys(result)[index]]}/>)
-                         }
-                       )}
-
+                       {
+                         products.map((product, index) =>  <Product  key={index} product={product}/>)
+                       }
+                      
                    </div>
                 }
-                 <button onClick={handlePagination} className="btn btn-info loading__button">Load More</button>
+                <div className="loading__button">
+                  <button disabled={btn_loading} onClick={handlePagination} className="btn btn-info loading__button">Load More</button>
+                  {btn_loading && <div className="spinner-border text-secondary" role="status"></div>}
+                </div>
+                
             </>
-        }
+           }
             </>
           }
-           
         </div>
     )
 }
